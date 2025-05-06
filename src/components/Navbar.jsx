@@ -13,6 +13,7 @@ function Navbar() {
                         <Link to="/portfolio" className="hover:text-primary-light">Portfolio</Link>
                     </div>
                 </div>
+
             </div>
         </nav>
     )
