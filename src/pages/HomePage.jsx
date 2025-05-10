@@ -3,16 +3,16 @@ import ChildComponent from "./homePage/ChildComponent.jsx";
 
 
 function HomePage() {
-    const product={
-        name:"shirt",
-        price:100,
-        id:2
-    }
-    const user={
-        name:"Rakib",
-        age:27,
-        mobile:"01768726911"
-    }
+    // const product={
+    //     name:"shirt",
+    //     price:100,
+    //     id:2
+    // }
+    // const user={
+    //     name:"Rakib",
+    //     age:27,
+    //     mobile:"01768726911"
+    // }
     return (
         <div className="">
             {/*<p>Product name:{product.name}</p>*/}
@@ -22,7 +22,7 @@ function HomePage() {
             {/*<ChildComponent productInfo={product} user={user}/>*/}
 
 
-            {/*<UserPage/>*/}
+            <UserPage/>
         </div>
     )
 }
