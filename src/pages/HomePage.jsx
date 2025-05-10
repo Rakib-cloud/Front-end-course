@@ -1,8 +1,28 @@
+import UserPage from "./user/UserPage.jsx";
+import ChildComponent from "./homePage/ChildComponent.jsx";
+
+
 function HomePage() {
+    const product={
+        name:"shirt",
+        price:100,
+        id:2
+    }
+    const user={
+        name:"Rakib",
+        age:27,
+        mobile:"01768726911"
+    }
     return (
-        <div className="max-w-2xl mx-auto">
-            <h1 className="text-3xl font-bold text-primary mb-4">Home Page</h1>
-            <p className="text-neutral-700">Welcome to our React application with Tailwind CSS 4 and React Router!</p>
+        <div className="">
+            {/*<p>Product name:{product.name}</p>*/}
+            {/*<p>Product price:{product.price}</p>*/}
+            {/*<p>Product id:{product.id}</p>*/}
+
+            {/*<ChildComponent productInfo={product} user={user}/>*/}
+
+
+            {/*<UserPage/>*/}
         </div>
     )
 }

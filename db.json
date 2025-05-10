@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "2",
+      "name": "Bob Smith",
+      "email": "bob@example.com"
+    },
+    {
+      "id": "3",
+      "name": "Charlie Brown",
+      "email": "charlie@example.com"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Product 1",
+      "price": 100,
+      "product_category": "shirt"
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "price": 300,
+      "product_category": "pant"
+    }
+  ]
+}
