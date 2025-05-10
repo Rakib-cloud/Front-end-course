@@ -4,7 +4,7 @@ const UserTable = ({ users }) => {
     if (users.length === 0) {
         return (
             <div className="bg-white rounded shadow p-6 text-center text-gray-500">
-                No users found. Click "Create User" to add one.
+                No users found.
             </div>
         );
     }
@@ -27,6 +27,7 @@ const UserTable = ({ users }) => {
                     </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
+
                     {users.map((user) => (
                         <tr key={user.id} className="hover:bg-gray-50">
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -34,6 +35,10 @@ const UserTable = ({ users }) => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <div className="text-sm text-gray-500">{user.email}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <button className="text-indigo-600 hover:text-indigo-900">Edit</button>
+                                <button className="text-red-600 hover:text-red-900">Delete</button>
                             </td>
 
                         </tr>
