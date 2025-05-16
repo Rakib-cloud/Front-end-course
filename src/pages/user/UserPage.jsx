@@ -1,83 +1,76 @@
+// pages/user/UserPage.jsx
 import React, { useState, useEffect } from "react";
-import {  getUsers} from "../../api/userApi.js";
-
-
-import UserTable from "../../components/user/UserList.jsx";
+import { getUsers, createUser, updateUser, deleteUser } from "../../api/userApi";
+import UserList from "../../components/user/UserList";
+import UserModal from "./components/UserModal.jsx";
 
 
 const UserPage = () => {
     const [users, setUsers] = useState([]);
-    const [mobile,setMobile]=useState('')
-    const [name,setName]=useState('')
-
-
-    // const onSubmit =()=>{
-    //   console.log('submitted value is',mobile,name)
-    // }
-
-
-
-
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState(null);
 
     const fetchUsers = async () => {
         const response = await getUsers();
         setUsers(response.data);
     };
 
-
-
     useEffect(() => {
         fetchUsers();
     }, []);
 
+    const handleAdd = () => {
+        setEditingUser(null);
+        setModalOpen(true);
+    };
 
+    const handleEdit = (user) => {
+        setEditingUser(user);
+        setModalOpen(true);
+    };
+
+    const handleDelete = async (id) => {
+        const confirm = window.confirm("Are you sure you want to delete this user?");
+        if (!confirm) return;
+
+        try {
+            const response = await deleteUser(id);
+            if (response.status === 200) {
+                alert("User deleted.");
+                fetchUsers();
+            }
+        } catch (err) {
+            console.error("Delete failed:", err);
+            alert("Error deleting user.");
+        }
+    };
+
+    const handleSave = async (userData) => {
+        if (editingUser) {
+            await updateUser(editingUser.id, userData);
+        } else {
+            await createUser(userData);
+        }
+        fetchUsers();
+    };
 
     return (
-        <>
-            <div className="">
-                {/*Value store in a state */}
-
-                {/*<div className="space-y-2">*/}
-                {/*    <div>*/}
-                {/*        <input*/}
-                {/*            name="mobile"*/}
-                {/*            className="p-2 rounded-md border border-gray-300"*/}
-                {/*            placeholder="Enter Mobile Number"*/}
-                {/*            value={mobile}*/}
-                {/*            onChange={(e) => setMobile(e.target.value)}*/}
-
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*    <div>*/}
-                {/*        <input*/}
-                {/*            name="name"*/}
-                {/*            className="p-2 rounded-md border border-gray-300"*/}
-                {/*            placeholder="Enter Name"*/}
-                {/*            value={name}*/}
-                {/*            onChange={(e) => setName(e.target.value)}*/}
-
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*    <div>*/}
-                {/*        <button className="bg-green-500 text-white px-4 py-2 rounded-md shadow"*/}
-                {/*                onClick={onSubmit}>Submit*/}
-                {/*        </button>*/}
-                {/*    </div>*/}
-
-
-                {/*</div>*/}
-
-                {/*Value get from json server and show into UI*/}
-
-
-
-                <div>
-                    <h2 className="text-xl font-semibold mb-2">User List</h2>
-                    <UserTable users={users}/>
-                </div>
-            </div>
-
-        </>
+        <div className="p-4">
+            <h2 className="text-xl font-semibold mb-4">User List</h2>
+            <button
+                onClick={handleAdd}
+                className="mb-4 bg-green-600 text-white px-4 py-2 rounded cursor-pointer"
+            >
+                Add User
+            </button>
+            <UserList users={users} onEdit={handleEdit} onDelete={handleDelete} />
+            <UserModal
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+                onSave={handleSave}
+                editingUser={editingUser}
+            />
+        </div>
     );
 };
 
