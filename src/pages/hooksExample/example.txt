@@ -1,0 +1,246 @@
+📦 2. Basic React Hooks
+🔹 useState – Manage state in a function component
+
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0); // 0 is initial state
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+
+🔹 useEffect – Side effects like API calls, subscriptions, etc.
+
+import React, { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setSeconds(s => s + 1), 1000);
+    return () => clearInterval(interval); // cleanup
+  }, []); // Empty array means run once on mount
+
+  return <div>Seconds: {seconds}</div>;
+}
+
+
+🔹 useContext – Access context values without Consumer
+
+import React, { useContext } from 'react';
+
+const ThemeContext = React.createContext('light');
+
+function ThemedComponent() {
+  const theme = useContext(ThemeContext);
+  return <div>The theme is {theme}</div>;
+}
+
+
+
+🚀 3. Additional Hooks
+🔹 useReducer – For complex state logic
+import React, { useReducer } from 'react';
+
+const initialState = { count: 0 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment': return { count: state.count + 1 };
+    case 'decrement': return { count: state.count - 1 };
+    default: return state;
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <div>
+      Count: {state.count}
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+    </div>
+  );
+}
+
+
+
+
+🔹 useRef – Access DOM nodes or persist values
+import React, { useRef } from 'react';
+
+function InputFocus() {
+  const inputRef = useRef();
+
+  const handleClick = () => inputRef.current.focus();
+
+  return (
+    <div>
+      <input ref={inputRef} />
+      <button onClick={handleClick}>Focus Input</button>
+    </div>
+  );
+}
+
+
+
+
+🔹 useMemo – Memoize expensive calculations
+
+import React, { useMemo, useState } from 'react';
+
+function ExpensiveCalculation({ number }) {
+  const compute = (n) => {
+    console.log('Calculating...');
+    return n * 2;
+  };
+
+  const result = useMemo(() => compute(number), [number]);
+
+  return <div>Result: {result}</div>;
+}
+
+
+
+
+🔹 useCallback – Memoize functions
+import React, { useState, useCallback } from 'react';
+
+function Button({ onClick, label }) {
+  console.log(`Rendering ${label}`);
+  return <button onClick={onClick}>{label}</button>;
+}
+
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = useCallback(() => {
+    setCount((c) => c + 1);
+  }, []);
+
+  return (
+    <div>
+      Count: {count}
+      <Button onClick={handleIncrement} label="Increment" />
+    </div>
+  );
+}
+
+
+
+🔹 useLayoutEffect – Similar to useEffect, but fires synchronously after DOM changes
+
+import React, { useLayoutEffect, useRef } from 'react';
+
+function Measure() {
+  const ref = useRef();
+
+  useLayoutEffect(() => {
+    console.log(ref.current.getBoundingClientRect());
+  }, []);
+
+  return <div ref={ref}>Measure me</div>;
+}
+
+
+
+
+🔹 useImperativeHandle – Customize instance value exposed to parent via ref
+
+import React, { useImperativeHandle, forwardRef, useRef } from 'react';
+
+const FancyInput = forwardRef((props, ref) => {
+  const inputRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    focus: () => inputRef.current.focus()
+  }));
+
+  return <input ref={inputRef} />;
+});
+
+function Parent() {
+  const ref = useRef();
+
+  return (
+    <>
+      <FancyInput ref={ref} />
+      <button onClick={() => ref.current.focus()}>Focus</button>
+    </>
+  );
+}
+
+
+
+
+🛠 4. Custom Hooks
+Custom hooks are just JS functions that use other hooks.
+
+function useCounter(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = () => setCount(c => c + 1);
+  const decrement = () => setCount(c => c - 1);
+
+  return { count, increment, decrement };
+}
+
+// Usage
+function Counter() {
+  const { count, increment, decrement } = useCounter(5);
+
+  return (
+    <div>
+      Count: {count}
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+    </div>
+  );
+}
+
+
+
+📏 5. Rules of Hooks
+Hooks must follow these rules:
+
+✅ Only call Hooks at the top level (not inside loops, conditions, or nested functions)
+
+✅ Only call Hooks from React function components or custom hooks
+
+🧪 6. Practical Examples
+✅ Example: Fetch data with useEffect
+
+function UserList() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  return (
+    <ul>
+      {users.map(user => <li key={user.id}>{user.name}</li>)}
+    </ul>
+  );
+}
+📚 Summary
+Hook	                                        Purpose
+useState	                                    State management
+useEffect	                                    Side effects
+useContext	                                    Access context
+useReducer	                                    Complex state logic
+useRef	                                        DOM refs or persistent values
+useMemo	                                        Expensive calculation memoization
+useCallback	                                    Memoize function references
+useLayoutEffect	                                DOM measurement/layout after render
+useImperativeHandle	                            Expose imperative methods to parent refs
+Custom Hook	                                    Share logic across components

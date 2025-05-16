@@ -10,9 +10,15 @@ const UserPage = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
 
+
     const fetchUsers = async () => {
         const response = await getUsers();
-        setUsers(response.data);
+        if(response?.status==200){
+            setUsers(response?.data);
+        }else{
+            setUsers([])
+        }
+
     };
 
     useEffect(() => {
@@ -51,8 +57,15 @@ const UserPage = () => {
         } else {
             await createUser(userData);
         }
+
         fetchUsers();
     };
+
+
+const handleModalClose = () => {
+    setModalOpen(false)
+}
+
 
     return (
         <div className="p-4">
@@ -64,9 +77,11 @@ const UserPage = () => {
                 Add User
             </button>
             <UserList users={users} onEdit={handleEdit} onDelete={handleDelete} />
+
+
             <UserModal
                 isOpen={isModalOpen}
-                onClose={() => setModalOpen(false)}
+                onClose={handleModalClose}
                 onSave={handleSave}
                 editingUser={editingUser}
             />

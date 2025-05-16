@@ -1,8 +1,9 @@
-// components/user/UserModal.jsx
+
 import React, { useState, useEffect } from "react";
 
 const UserModal = ({ isOpen, onClose, onSave, editingUser }) => {
     const [formData, setFormData] = useState({ name: "", email: "" });
+
 
     useEffect(() => {
         if (editingUser) {
@@ -49,11 +50,13 @@ const UserModal = ({ isOpen, onClose, onSave, editingUser }) => {
                         onChange={handleChange}
                         required
                     />
+
+
                     <div className="flex justify-end gap-2">
-                        <button type="button" onClick={onClose} className="bg-gray-400 px-4 py-2 rounded text-white">
+                        <button type="button" onClick={onClose} className="cursor-pointer bg-gray-400 px-4 py-2 rounded text-white">
                             Cancel
                         </button>
-                        <button type="submit" className="bg-blue-600 px-4 py-2 rounded text-white">
+                        <button type="submit" className="cursor-pointer bg-blue-600 px-4 py-2 rounded text-white">
                             {editingUser ? "Update" : "Add"}
                         </button>
                     </div>
