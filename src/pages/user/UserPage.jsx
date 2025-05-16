@@ -50,6 +50,7 @@ const UserPage = () => {
             alert("Error deleting user.");
         }
     };
+    console.log('check git')
 
     const handleSave = async (userData) => {
         if (editingUser) {
