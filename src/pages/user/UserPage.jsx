@@ -1,6 +1,6 @@
 // pages/user/UserPage.jsx
 import React, { useState, useEffect } from "react";
-import { getUsers, createUser, updateUser, deleteUser } from "../../api/userApi";
+import {getUsers, createUser, deleteUser, updateUser} from "../../api/userApi";
 import UserList from "../../components/user/UserList";
 import UserModal from "./components/UserModal.jsx";
 
@@ -50,7 +50,7 @@ const UserPage = () => {
             alert("Error deleting user.");
         }
     };
-    console.log('check git')
+
 
     const handleSave = async (userData) => {
         if (editingUser) {

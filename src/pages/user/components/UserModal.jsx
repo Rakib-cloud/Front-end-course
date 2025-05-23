@@ -56,7 +56,7 @@ const UserModal = ({ isOpen, onClose, onSave, editingUser }) => {
                         <button type="button" onClick={onClose} className="cursor-pointer bg-gray-400 px-4 py-2 rounded text-white">
                             Cancel
                         </button>
-                        <button type="submit" className="cursor-pointer bg-blue-600 px-4 py-2 rounded text-white">
+                        <button type="submit" className="cursor-pointer bg-blue-600 px-4 py-2 rounded text-white" >
                             {editingUser ? "Update" : "Add"}
                         </button>
                     </div>

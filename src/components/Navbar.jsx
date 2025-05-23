@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import {Link, Navigate, NavLink} from 'react-router-dom'
 
 function Navbar() {
     return (
@@ -7,10 +7,35 @@ function Navbar() {
                 <div className="flex justify-between items-center">
                     <Link to="/" className="text-xl font-bold">My App</Link>
                     <div className="space-x-4">
-                        <Link to="/" className="hover:text-primary-light">Home</Link>
-                        <Link to="/about" className="hover:text-primary-light">About</Link>
-                        <Link to="/details" className="hover:text-primary-light">Details</Link>
-                        <Link to="/portfolio" className="hover:text-primary-light">Portfolio</Link>
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => isActive ? "text-red-500 font-bold text-2xl" : ""}
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
+                            to="/about"
+                            className={({ isActive }) => isActive ? "text-red-500 font-bold text-2xl" : ""}
+                        >
+                           About
+                        </NavLink>
+
+                        <NavLink
+                            to="/details"
+                            className={({ isActive }) => isActive ? "text-red-500 font-bold text-2xl" : ""}
+                        >
+                            Details
+                        </NavLink>
+                        <NavLink
+                            to="/portfolio"
+                            className={({ isActive }) => isActive ? "text-red-500 font-bold text-2xl" : ""}
+                        >
+                            Portfolio
+                        </NavLink>
+
+
+
+
                     </div>
                 </div>
 
